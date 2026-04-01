@@ -1,6 +1,5 @@
 import os
 from pathlib import Path
-import os
 import dj_database_url
 
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -9,6 +8,10 @@ SECRET_KEY = 'replace-me-with-secure-key'
 
 DEBUG = False
 ALLOWED_HOSTS = ['www.jaminjuma.tech']
+
+# Optional fallback: serve media files through Django when platform routing is not configured.
+# Set SERVE_MEDIA_FILES=True in production only if your reverse proxy cannot map /media/.
+SERVE_MEDIA_FILES = os.getenv('SERVE_MEDIA_FILES', 'False').lower() == 'true'
 
 
 INSTALLED_APPS = [
@@ -60,7 +63,8 @@ WSGI_APPLICATION = 'portfolio_site.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3'
+        
     }
 }
 
