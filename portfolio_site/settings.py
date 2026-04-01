@@ -8,7 +8,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'replace-me-with-secure-key'
 
 DEBUG = False
-ALLOWED_HOSTS = ['www.jaminjuma.tech']
+ALLOWED_HOSTS = ['jumajamin.tech']
 
 
 INSTALLED_APPS = [
@@ -32,7 +32,9 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-    
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 
 ROOT_URLCONF = 'portfolio_site.urls'
