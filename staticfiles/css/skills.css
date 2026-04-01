@@ -1,0 +1,126 @@
+/* ============================
+   SKILLS PAGE STYLES
+   Skill Categories & Tags
+   ============================ */
+
+:root {
+  --bg-deep-charcoal: #0D1117;
+  --text-pale-green: #B9FFB9;
+  --accent-matrix-green: #00FF41;
+  --glow-color: rgba(0, 255, 65, 0.4);
+  --border-color: rgba(0, 255, 65, 0.2);
+}
+
+/* ============================
+   SKILLS SECTION
+   ============================ */
+
+.skills-section {
+  margin: 2rem 0;
+}
+
+.skills-section h2 {
+  font-size: 2.2rem;
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+}
+
+.skill-category {
+  background: rgba(0, 255, 65, 0.03);
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  padding: 1.5rem;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.skill-category:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(0, 255, 65, 0.2);
+}
+
+.skill-category h3 {
+  color: var(--accent-matrix-green);
+  margin-bottom: 1rem;
+  border-bottom: 1px solid rgba(0, 255, 65, 0.3);
+  padding-bottom: 0.5rem;
+  text-shadow: 0 0 10px var(--glow-color);
+  font-size: 1.2rem;
+}
+
+.skill-items {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.skill-tag {
+  background: rgba(0, 255, 65, 0.1);
+  color: var(--text-pale-green);
+  padding: 0.3rem 0.8rem;
+  border-radius: 15px;
+  font-size: 0.9rem;
+  border: 1px solid rgba(0, 255, 65, 0.3);
+  transition: all 0.3s;
+}
+
+.skill-tag:hover {
+  background: rgba(0, 255, 65, 0.2);
+  color: var(--accent-matrix-green);
+  box-shadow: 0 0 10px rgba(0, 255, 65, 0.2);
+}
+
+/* ============================
+   RESPONSIVE - SKILLS PAGE
+   ============================ */
+
+@media (max-width: 1024px) {
+  .skills-grid {
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  .skills-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .skill-category {
+    padding: 1.5rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .skill-category {
+    padding: 1.2rem;
+  }
+
+  .skill-category h3 {
+    font-size: 1rem;
+  }
+
+  .skill-items {
+    gap: 0.4rem;
+  }
+
+  .skill-tag {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 400px) {
+  .skill-category {
+    padding: 0.8rem;
+  }
+
+  .skill-tag {
+    padding: 0.3rem 0.6rem;
+    font-size: 0.75rem;
+  }
+}

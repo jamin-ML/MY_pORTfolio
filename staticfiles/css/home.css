@@ -1,0 +1,135 @@
+/* ============================
+   HOME PAGE STYLES
+   Hero Section
+   ============================ */
+
+:root {
+  --bg-deep-charcoal: #0D1117;
+  --text-pale-green: #B9FFB9;
+  --text-light: #f3f7f3;
+  --accent-matrix-green: #00FF41;
+  --glow-color: rgba(0, 255, 65, 0.4);
+  --border-color: rgba(0, 255, 65, 0.2);
+}
+
+/* ============================
+   MODAL STYLES
+   ============================ */
+
+#aboutModal::-webkit-scrollbar {
+  width: 8px;
+}
+
+#aboutModal::-webkit-scrollbar-track {
+  background: rgba(0, 255, 65, 0.1);
+}
+
+#aboutModal::-webkit-scrollbar-thumb {
+  background: #00FF41;
+  border-radius: 4px;
+}
+
+#aboutModal::-webkit-scrollbar-thumb:hover {
+  background: #B9FFB9;
+}
+
+/* ============================
+   HERO SECTION
+   ============================ */
+
+.hero-section {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  align-items: center;
+  margin: 2rem 0 4rem 0;
+  max-width: 1000px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.hero-content h1 {
+  font-size: 3rem;
+  color: var(--accent-matrix-green);
+  margin-bottom: 1.5rem;
+  text-shadow: 0 0 20px var(--glow-color);
+}
+
+.hero-content p {
+  font-size: 1.1rem;
+  color: var(--text-light);
+  margin-bottom: 1rem;
+  line-height: 1.8;
+}
+
+.hero-image {
+  width: 100%;
+  height: 400px;
+  background: linear-gradient(135deg, rgba(0, 255, 65, 0.05), rgba(0, 255, 65, 0.02));
+  border-radius: 10px;
+  border: 1px solid var(--border-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--accent-matrix-green);
+  font-size: 3rem;
+  box-shadow: inset 0 0 50px rgba(0, 255, 65, 0.1);
+}
+
+/* ============================
+   RESPONSIVE - HOME PAGE
+   ============================ */
+
+@media (max-width: 768px) {
+  .hero-section {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    margin: 8rem 0 9rem 0;
+  }
+
+  .hero-content h1 {
+    font-size: 2rem;
+  }
+
+  .hero-content p {
+    font-size: 1rem;
+  }
+
+  .hero-image {
+    height: 300px;
+    order: -1;
+  }
+}
+
+@media (max-width: 600px) {
+  .hero-section {
+    gap: 1.5rem;
+    margin: 8rem 0 1.5rem 0;
+  }
+
+  .hero-content h1 {
+    font-size: 1.5rem;
+  }
+
+  .hero-content p {
+    font-size: 0.95rem;
+  }
+
+  .hero-image {
+    height: 250px;
+  }
+}
+
+@media (max-width: 400px) {
+  .hero-content h1 {
+    font-size: 1.3rem;
+  }
+
+  .hero-content p {
+    font-size: 0.9rem;
+  }
+
+  .hero-image {
+    height: 200px;
+  }
+}
