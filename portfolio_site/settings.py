@@ -7,7 +7,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = 'replace-me-with-secure-key'
 
-DEBUG = True
+DEBUG = False
 ALLOWED_HOSTS = ['www.jaminjuma.tech']
 
 
