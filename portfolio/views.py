@@ -39,7 +39,7 @@ def contact(request):
 
 
 # Dashboard Views
-@login_required(login_url='admin:login')
+@login_required(login_url='login')
 def dashboard(request):
     blogs_count = Blog.objects.count()
     projects_count = Project.objects.count()
@@ -56,14 +56,14 @@ def dashboard(request):
 
 
 # Blog Dashboard Views
-@login_required(login_url='admin:login')
+@login_required(login_url='login')
 def blog_dashboard(request):
     blogs = Blog.objects.order_by('-created')
     context = {'blogs': blogs}
     return render(request, 'dashboard/blog_dashboard.html', context)
 
 
-@login_required(login_url='admin:login')
+@login_required(login_url='login')
 def blog_create(request):
     if request.method == 'POST':
         form = BlogForm(request.POST, request.FILES)
@@ -76,7 +76,7 @@ def blog_create(request):
     return render(request, 'dashboard/blog_form.html', {'form': form, 'title': 'Create Blog'})
 
 
-@login_required(login_url='admin:login')
+@login_required(login_url='login')
 def blog_edit(request, pk):
     blog = get_object_or_404(Blog, pk=pk)
     if request.method == 'POST':
@@ -90,7 +90,7 @@ def blog_edit(request, pk):
     return render(request, 'dashboard/blog_form.html', {'form': form, 'blog': blog, 'title': 'Edit Blog'})
 
 
-@login_required(login_url='admin:login')
+@login_required(login_url='login')
 @require_http_methods(['POST'])
 def blog_delete(request, pk):
     blog = get_object_or_404(Blog, pk=pk)
@@ -101,14 +101,14 @@ def blog_delete(request, pk):
 
 
 # Project Dashboard Views
-@login_required(login_url='admin:login')
+@login_required(login_url='login')
 def project_dashboard(request):
     projects = Project.objects.order_by('-created')
     context = {'projects': projects}
     return render(request, 'dashboard/project_dashboard.html', context)
 
 
-@login_required(login_url='admin:login')
+@login_required(login_url='login')
 def project_create(request):
     if request.method == 'POST':
         form = ProjectForm(request.POST, request.FILES)
@@ -121,7 +121,7 @@ def project_create(request):
     return render(request, 'dashboard/project_form.html', {'form': form, 'title': 'Create Project'})
 
 
-@login_required(login_url='admin:login')
+@login_required(login_url='login')
 def project_edit(request, pk):
     project = get_object_or_404(Project, pk=pk)
     if request.method == 'POST':
@@ -135,7 +135,7 @@ def project_edit(request, pk):
     return render(request, 'dashboard/project_form.html', {'form': form, 'project': project, 'title': 'Edit Project'})
 
 
-@login_required(login_url='admin:login')
+@login_required(login_url='login')
 @require_http_methods(['POST'])
 def project_delete(request, pk):
     project = get_object_or_404(Project, pk=pk)

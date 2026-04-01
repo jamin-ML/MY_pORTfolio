@@ -77,6 +77,9 @@ MESSAGE_TAGS = {
     'warning': 'warning',
 }
 
+LOGIN_REDIRECT_URL = '/dashboard/'
+LOGOUT_REDIRECT_URL = '/'
+
 LANGUAGE_CODE = 'en-us'
 TIME_ZONE = 'UTC'
 USE_I18N = True
