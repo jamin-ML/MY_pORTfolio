@@ -8,7 +8,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'replace-me-with-secure-key'
 
 DEBUG = True
-ALLOWED_HOSTS = [os.environ.get('RENDER_EXTERNAL_HOSTNAME', '*')]
+ALLOWED_HOSTS = ['www.jaminjuma.tech']
 
 
 INSTALLED_APPS = [
