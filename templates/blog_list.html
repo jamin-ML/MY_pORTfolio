@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block content %}
+<section class="section-card">
+  <h2>Blog</h2>
+  <div style="margin-top:1rem;">
+    {% for post in posts %}
+      <article style="padding:1rem 0;border-bottom:1px solid rgba(255,255,255,0.03);">
+        <h3><a href="/blog/{{ post.slug }}/" style="color:#bfe9e0;text-decoration:none">{{ post.title }}</a></h3>
+        <p style="color:#9fb0c1">{{ post.created|date:'M d, Y' }}</p>
+      </article>
+    {% empty %}
+      <p>No posts yet.</p>
+    {% endfor %}
+  </div>
+</section>
+{% endblock %}

@@ -1,0 +1,75 @@
+{% extends 'dashboard/base_dashboard.html' %}
+
+{% block content %}
+<div class="header">
+  <h1>
+    <i class="fas fa-pen-fancy"></i>
+    Manage Blogs
+  </h1>
+  <div class="header-actions">
+    <a href="{% url 'blog_create' %}" class="btn btn-primary">
+      <i class="fas fa-plus"></i> Create Blog
+    </a>
+  </div>
+</div>
+
+<div class="content">
+  {% if blogs %}
+  <div class="table-responsive">
+    <table>
+      <thead>
+        <tr>
+          <th>Title</th>
+          <th>Slug</th>
+          <th>Created</th>
+          <th>Cover Image</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for blog in blogs %}
+        <tr>
+          <td>
+            <strong>{{ blog.title }}</strong>
+            <br>
+            <small style="color: #888;">{{ blog.content|truncatewords:15 }}</small>
+          </td>
+          <td><code style="background: #1a1a1a; padding: 0.3rem 0.6rem; border-radius: 4px;">{{ blog.slug }}</code></td>
+          <td>{{ blog.created|date:"M d, Y H:i" }}</td>
+          <td>
+            {% if blog.cover %}
+            <img src="{{ blog.cover.url }}" alt="{{ blog.title }}" style="width: 50px; height: 50px; border-radius: 4px; object-fit: cover;">
+            {% else %}
+            <span style="color: #666;">No image</span>
+            {% endif %}
+          </td>
+          <td>
+            <div class="action-buttons">
+              <a href="{% url 'blog_edit' blog.pk %}" class="btn btn-secondary btn-sm">
+                <i class="fas fa-edit"></i> Edit
+              </a>
+              <form method="post" action="{% url 'blog_delete' blog.pk %}" style="display: inline;" onsubmit="return confirm('Delete this blog?');">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger btn-sm">
+                  <i class="fas fa-trash"></i> Delete
+                </button>
+              </form>
+            </div>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% else %}
+  <div style="padding: 3rem; text-align: center; background: rgba(0,255,0,0.05); border-radius: 8px;">
+    <i class="fas fa-inbox" style="font-size: 3rem; color: #00ff00; margin-bottom: 1rem;"></i>
+    <h3 style="color: #cccccc;">No blogs yet</h3>
+    <p style="color: #999; margin: 1rem 0;">Start creating your first blog post to share your thoughts and insights.</p>
+    <a href="{% url 'blog_create' %}" class="btn btn-primary">
+      <i class="fas fa-plus"></i> Create Your First Blog
+    </a>
+  </div>
+  {% endif %}
+</div>
+{% endblock %}

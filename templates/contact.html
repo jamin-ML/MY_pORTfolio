@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block content %}
+<section class="section-card">
+  <h2>Contact</h2>
+  <div style="margin-top:1rem;display:flex;gap:1.5rem;flex-wrap:wrap;">
+    <div style="flex:1;min-width:260px;">
+      <p style="color:#cbd5e1">Email: <a href="mailto:you@example.com" style="color:#2dd4bf">you@example.com</a></p>
+    </div>
+    <div style="flex:2;min-width:280px;">
+      <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button class="btn" type="submit">Send</button>
+      </form>
+    </div>
+  </div>
+</section>
+{% endblock %}

@@ -1,0 +1,86 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard - Portfolio</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <link rel="stylesheet" href="{% static 'css/base.css' %}">
+  <link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #0a0a0a;
+      color: #ffffff;
+      line-height: 1.6;
+    }
+  </style>
+</head>
+<body>
+  <div class="dashboard-container">
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <div class="sidebar-logo">
+        <a href="{% url 'dashboard' %}">
+          <i class="fas fa-chart-bar"></i>
+          Dashboard
+        </a>
+      </div>
+
+      <nav class="sidebar-nav">
+        <div class="section-title">Main</div>
+        <a href="{% url 'dashboard' %}" class="{% if request.resolver_match.url_name == 'dashboard' %}active{% endif %}">
+          <i class="fas fa-home"></i>
+          Home
+        </a>
+
+        <div class="section-title" style="margin-top: 1.5rem;">Content</div>
+        <a href="{% url 'blog_dashboard' %}" class="{% if 'blog' in request.resolver_match.url_name %}active{% endif %}">
+          <i class="fas fa-pen-fancy"></i>
+          Blogs
+        </a>
+        <a href="{% url 'project_dashboard' %}" class="{% if 'project' in request.resolver_match.url_name %}active{% endif %}">
+          <i class="fas fa-folder"></i>
+          Projects
+        </a>
+
+        <div class="section-title" style="margin-top: 1.5rem;">Admin</div>
+        <a href="{% url 'admin:index' %}" target="_blank">
+          <i class="fas fa-cog"></i>
+          Django Admin
+        </a>
+        <form method="post" action="{% url 'admin:logout' %}" style="width: 100%;">
+          {% csrf_token %}
+          <button type="submit" class="logout-btn">
+            <i class="fas fa-sign-out-alt"></i>
+            Logout
+          </button>
+        </form>
+      </nav>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+      {% if messages %}
+      <div class="messages">
+        {% for message in messages %}
+          <div class="message {% if message.tags %}{{ message.tags }}{% else %}info{% endif %}">
+            <i class="fas fa-{% if message.tags == 'success' %}check-circle{% elif message.tags == 'error' %}exclamation-circle{% else %}info-circle{% endif %}"></i>
+            {{ message }}
+          </div>
+        {% endfor %}
+      </div>
+      {% endif %}
+
+      {% block content %}{% endblock %}
+    </div>
+  </div>
+</body>
+</html>

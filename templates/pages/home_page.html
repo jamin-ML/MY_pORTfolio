@@ -1,0 +1,131 @@
+<div id="home" class="page active">
+    <div class="hero-section">
+        <div class="hero-content">
+            <h1>Jamin Juma</h1>
+            <p style="font-size: 1.1rem; margin: 1rem 0; color: #B9FFB9;">Building AI-Powered Solutions with Python, Machine Learning & Data Analytics</p>
+            <p>I specialize in end-to-end Python ML projects, from concept to production. My expertise spans machine learning model development, AI solutions, and data-driven decision making. I help organizations in Kenya and beyond transform complex data into powerful, actionable insights.</p>
+
+            <button type="button" onclick="openAboutModal()" class="read-more" style="display: inline-block; margin-top: 1.5rem; color: #00ff00; text-decoration: none; font-weight: 500; border-bottom: 2px solid #00ff00; padding: 0 0 0.3rem 0; transition: all 0.3s; cursor: pointer; background: transparent; border-top: 0; border-right: 0; border-left: 0;">
+                Read More About Me →
+            </button>
+        </div>
+        <div class="hero-image">
+            <img src="/media/Gemini_Generated_Image_942g9p942g9p942g.png" alt="Jamin Juma - Data Scientist & Machine Learning Engineer" style="width: 100%; height: 100%; object-fit: cover; border-radius: 10px;">
+        </div>
+    </div>
+
+    <!-- About Section -->
+    <section style="margin: 4rem 0;">
+        <h2 style="color: #00ff00; margin-bottom: 2rem;">About Me</h2>
+        <div class="card">
+            <p>I'm a Python developer and machine learning engineer specializing in end-to-end AI and data-driven solutions. With over 5 years of experience, I design and deploy scalable machine learning models, data pipelines, and AI systems that transform complex data into actionable insights.</p>
+            <p style="margin-top: 1rem;">My work spans predictive analytics, natural language processing, computer vision, and time-series forecasting using TensorFlow, PyTorch, and scikit-learn. I help organizations in Kenya and beyond leverage AI and data analytics to make smarter decisions.</p>
+            <button type="button" onclick="openAboutModal()" class="read-more" style="display: inline-block; margin-top: 1.5rem; color: #00ff00; text-decoration: none; font-weight: 500; border-bottom: 2px solid #00ff00; padding: 0 0 0.3rem 0; transition: all 0.3s; cursor: pointer; background: transparent; border-top: 0; border-right: 0; border-left: 0;">
+                Read More About Me →
+            </button>
+        </div>
+    </section>
+
+    <!-- About Modal -->
+    <div id="aboutModal" style="display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.8); overflow: auto;">
+        <div style="background-color: #0D1117; margin: auto; padding: 2rem; max-width: 800px; border: 1px solid #00FF41; border-radius: 10px; margin-top: 3rem; color: #B9FFB9;">
+            <button type="button" onclick="closeAboutModal()" aria-label="Close about modal" style="color: #00FF41; float: right; font-size: 28px; font-weight: bold; cursor: pointer; background: transparent; border: 0; line-height: 1;">&times;</button>
+            <h2 style="color: #00FF41; margin-bottom: 1.5rem;">About Me - Full Profile</h2>
+            <p><strong style="color: #B9FFB9;">Building AI-Powered Solutions with Python, Machine Learning & Data Analytics</strong></p>
+            <p style="margin-top: 1rem;">I am a Python developer and machine learning engineer specializing in end-to-end AI and data-driven solutions. With over 5 years of experience, I design and deploy scalable machine learning models, data pipelines, and AI systems that transform complex data into actionable insights. My work spans predictive analytics, natural language processing, computer vision, and time-series forecasting using tools like TensorFlow, PyTorch, and scikit-learn.</p>
+            <p style="margin-top: 1rem;">I have extensive experience in data analysis, asking domain-relevant questions, and applying critical thinking to generate insights that drive business decisions and streamline operations. I leverage Python, Excel, and Power BI to deliver robust analysis and actionable reports.</p>
+            <p style="margin-top: 1rem;">On the backend, I develop real-world solutions with well-structured data pipelines using FastAPI and REST APIs. I am also proficient in cloud technologies, including Azure, which I use for database and application hosting.</p>
+            <p style="margin-top: 1rem;">In addition, I have hands-on experience with open-source large language models (LLMs), which I have applied to build applications such as translators and speech-to-voice systems for web applications.</p>
+            <p style="margin-top: 1rem;">I help organizations in Kenya and beyond leverage AI and data analytics to make smarter, faster, and more informed decisions.</p>
+        </div>
+    </div>
+
+    <!-- Tools Section -->
+    <section style="margin: 4rem 0;">
+        <h2 style="color: #00ff00; margin-bottom: 2rem;">Tools & Technologies</h2>
+        <div class="skills-grid">
+            <div class="skill-category">
+                <h3>Python & ML</h3>
+                <div class="skill-items">
+                    <span class="skill-tag">Python</span>
+                    <span class="skill-tag">TensorFlow</span>
+                    <span class="skill-tag">PyTorch</span>
+                    <span class="skill-tag">Scikit-learn</span>
+                    <span class="skill-tag">Pandas</span>
+                    <span class="skill-tag">NumPy</span>
+                </div>
+            </div>
+            <div class="skill-category">
+                <h3>Data Analysis</h3>
+                <div class="skill-items">
+                    <span class="skill-tag">SQL</span>
+                    <span class="skill-tag">Tableau</span>
+                    <span class="skill-tag">Power BI</span>
+                    <span class="skill-tag">Excel</span>
+                    <span class="skill-tag">R</span>
+                </div>
+            </div>
+            <div class="skill-category">
+                <h3>Backend Tools</h3>
+                <div class="skill-items">
+                    <span class="skill-tag">FastAPI</span>
+                    <span class="skill-tag">SQL</span>
+                    <span class="skill-tag">PostgreSQL</span>
+                    <span class="skill-tag">MongoDB</span>
+                    <span class="skill-tag">Redis</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section style="margin: 4rem 0;">
+        <h2 style="color: #00ff00; margin-bottom: 2rem;">Featured Projects</h2>
+        {% if projects %}
+        <div class="card-container">
+            {% for project in projects %}
+            <div class="card">
+                <h3>{{ project.title }}</h3>
+                <p>{{ project.description|truncatewords:30 }}</p>
+                <div style="margin-top: 1rem;">
+                    <button
+                        type="button"
+                        onclick="openProjectModal(this)"
+                        data-title="{{ project.title|escape }}"
+                        data-description="{{ project.description|escape }}"
+                        data-link="{% if project.link %}{{ project.link }}{% endif %}"
+                        class="read-more"
+                        style="display: inline-block; color: #00ff00; text-decoration: none; font-weight: 500; border-bottom: 2px solid #00ff00; padding: 0 0 0.3rem 0; transition: all 0.3s; cursor: pointer; background: transparent; border-top: 0; border-right: 0; border-left: 0;">
+                        Read More →
+                    </button>
+                    {% if project.link %}
+                    <a href="{{ project.link }}" target="_blank" class="read-more" style="display: inline-block; margin-left: 1rem; color: #00ff00; text-decoration: none; font-weight: 500; border-bottom: 2px solid #00ff00; padding-bottom: 0.3rem; transition: all 0.3s;">
+                        View Project →
+                    </a>
+                    {% endif %}
+                </div>
+                {% if project.image %}
+                <div style="margin-top: 1rem; border-radius: 8px; overflow: hidden; max-height: 200px;">
+                    <img src="{{ project.image.url }}" alt="{{ project.title }}" style="width: 100%; height: 100%; object-fit: cover;">
+                </div>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div style="padding: 2rem; text-align: center; background: rgba(0,0,0,0.45); border: 1px solid rgba(0,255,65,0.25); border-radius: 8px; color: #E6FFE6;">
+            <p>Projects coming soon...</p>
+        </div>
+        {% endif %}
+    </section>
+
+    <!-- Project Modal -->
+    <div id="projectModal" style="display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.8); overflow: auto;">
+        <div style="background-color: #0D1117; margin: auto; padding: 2rem; max-width: 800px; border: 1px solid #00FF41; border-radius: 10px; margin-top: 3rem; color: #B9FFB9;">
+            <button type="button" onclick="closeProjectModal()" aria-label="Close project modal" style="color: #00FF41; float: right; font-size: 28px; font-weight: bold; cursor: pointer; background: transparent; border: 0; line-height: 1;">&times;</button>
+            <h2 id="projectModalTitle" style="color: #00FF41; margin-bottom: 1.5rem;">Project Details</h2>
+            <p id="projectModalDescription" style="margin-top: 1rem;"></p>
+            <div id="projectModalLink" style="margin-top: 1.5rem;"></div>
+        </div>
+    </div>
+</div>

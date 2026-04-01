@@ -1,0 +1,278 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Jamin Juma - Data Scientist & Machine Learning Engineer portfolio showcasing Python ML projects, AI solutions, and data analytics expertise. Based in Kenya. Expert in TensorFlow, PyTorch, Scikit-learn.">
+  <meta name="keywords" content="Data Scientist Kenya, Machine Learning Engineer, Python ML Projects, AI Solutions, Data Analytics, Portfolio">
+  <meta name="author" content="Jamin Juma">
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+  <meta property="og:title" content="Jamin Juma - Data Scientist & ML Engineer Portfolio">
+  <meta property="og:description" content="Explore my machine learning projects, data science expertise, and AI solutions portfolio showcasing Python-based solutions.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://jaminjuma.com">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Jamin Juma - Data Scientist & ML Engineer">
+  <meta name="twitter:description" content="Portfolio of Python ML projects, AI solutions, and data science expertise.">
+  <link rel="canonical" href="https://jaminjuma.com">
+  <title>Jamin Juma - Data Scientist & Machine Learning Engineer | Kenya | Python ML Portfolio</title>
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="/media/image.png">
+  <link rel="shortcut icon" href="/media/image.png">
+  <link rel="apple-touch-icon" href="/media/image.png">
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <!-- CSS Stylesheets -->
+  <link rel="stylesheet" href="{% static 'css/base.css' %}">
+  <link rel="stylesheet" href="{% static 'css/components.css' %}">
+  <link rel="stylesheet" href="{% static 'css/home.css' %}">
+  <link rel="stylesheet" href="{% static 'css/about.css' %}">
+  <link rel="stylesheet" href="{% static 'css/skills.css' %}">
+  <link rel="stylesheet" href="{% static 'css/blog.css' %}">
+  <link rel="stylesheet" href="{% static 'css/contact.css' %}">
+  <link rel="stylesheet" href="{% static 'css/responsive.css' %}">
+  <!-- Schema.org Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Jamin Juma",
+    "jobTitle": "Data Scientist & Machine Learning Engineer",
+    "url": "https://jaminjuma.com",
+    "email": "jumajamin55@gmail.com",
+    "telephone": "+254742134433",
+    "nationality": "Kenyan",
+    "image": "https://jaminjuma.com/media/profile_img.png",
+    "sameAs": [
+      "https://www.linkedin.com/in/jumajamin",
+      "https://github.com/jamin-ML/",
+      "https://wa.me/254742134433"
+    ],
+    "knowsAbout": [
+      "Machine Learning",
+      "Data Science",
+      "Python",
+      "TensorFlow",
+      "PyTorch",
+      "Scikit-learn",
+      "Data Analysis",
+      "AI Solutions"
+    ]
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "Jamin Juma - Data Scientist Portfolio",
+    "url": "https://jaminjuma.com",
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": {
+        "@type": "EntryPoint",
+        "urlTemplate": "https://jaminjuma.com/search?q={search_term_string}"
+      },
+      "query-input": "required name=search_term_string"
+    }
+  }
+  </script>
+</head>
+<body>
+  <!-- Binary Rain Canvas -->
+  <canvas id="binary-canvas"></canvas>
+  <!-- Code Background -->
+  <div class="code-background"></div>
+  <div class="code-snippets">
+          # ==============================
+      # CORE LIBRARIES
+      # ==============================
+
+      import numpy as np
+      import pandas as pd
+
+      # ==============================
+      # VISUALIZATION
+      # ==============================
+
+      import matplotlib.pyplot as plt
+      import seaborn as sns
+      import plotly.express as px
+      import plotly.graph_objects as go
+
+      # ==============================
+      # MACHINE LEARNING (SKLEARN)
+      # ==============================
+
+      from sklearn.model_selection import (
+          train_test_split,
+          cross_val_score,
+          GridSearchCV,
+          RandomizedSearchCV
+      )
+
+      from sklearn.preprocessing import (
+          StandardScaler,
+          MinMaxScaler,
+          RobustScaler,
+          OneHotEncoder,
+          LabelEncoder
+      )
+
+      from sklearn.compose import ColumnTransformer
+      from sklearn.pipeline import Pipeline
+
+      from sklearn.linear_model import (
+          LinearRegression,
+          LogisticRegression
+      )
+
+      from sklearn.ensemble import (
+          RandomForestClassifier,
+          RandomForestRegressor,
+          GradientBoostingClassifier,
+          GradientBoostingRegressor
+      )
+
+      from sklearn.metrics import (
+          accuracy_score,
+          classification_report,
+          confusion_matrix,
+          r2_score,
+          mean_absolute_error,
+          mean_squared_error
+      )
+
+      # ==============================
+      # ADVANCED ML
+      # ==============================
+
+      import xgboost as xgb
+      import lightgbm as lgb
+      import catboost as cb
+
+      # ==============================
+      # STATISTICS
+      # ==============================
+
+      import scipy.stats as stats
+      import statsmodels.api as sm
+
+  </div>
+
+  <!-- Left Side Image -->
+  <img src="/media/image.png" alt="Background decoration" class="left-image">
+
+  <!-- Header -->
+  <header>
+    <nav>
+      <div class="logo">
+        <img src="/media/image.png" alt="Portfolio Logo">
+      </div>
+      <button class="mobile-menu-toggle" type="button" onclick="toggleMobileMenu()" aria-label="Toggle navigation" aria-expanded="false" aria-controls="primary-navigation">☰</button>
+      <div class="nav-links" id="primary-navigation">
+        <a href="{% url 'home' %}" onclick="if(window.location.pathname === '/') { event.preventDefault(); showPage('home'); }">Home</a>
+        <a href="{% url 'home' %}#about" onclick="if(window.location.pathname === '/') { event.preventDefault(); showPage('about'); }">About Me</a>
+        <a href="{% url 'home' %}#blog" onclick="if(window.location.pathname === '/') { event.preventDefault(); showPage('blog'); }">Blog</a>
+        <a href="{% url 'home' %}#skills" onclick="if(window.location.pathname === '/') { event.preventDefault(); showPage('skills'); }">Skills</a>
+        <a href="{% url 'home' %}#contact" onclick="if(window.location.pathname === '/') { event.preventDefault(); showPage('contact'); }">Contact</a>
+        {% if user.is_authenticated %}
+        <a href="{% url 'dashboard' %}">Dashboard</a>
+        {% endif %}
+      </div>
+    </nav>
+  </header>
+
+  <!-- Floating Buttons -->
+  <div class="floating-buttons">
+    <a href="https://wa.me/254742134433" class="floating-button left" target="_blank">💬</a>
+    <button class="floating-button right" onclick="toggleChat()">🤖</button>
+  </div>
+
+  <!-- AI Chat Modal -->
+  <div class="chat-modal" id="chatModal">
+    <div class="chat-header">
+      <span>AI Assistant</span>
+      <button type="button" class="chat-close" onclick="toggleChat()" aria-label="Close chat">×</button>
+    </div>
+    <div class="chat-messages" id="chatMessages">
+      <div style="color: #00FF41; margin-bottom: 10px; text-shadow: 0 0 10px rgba(0, 255, 65, 0.4);">AI: Hello! How can I help you today?</div>
+    </div>
+    <div class="chat-input">
+      <input type="text" id="chatInput" placeholder="Type your message...">
+      <button onclick="sendMessage()">Send</button>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <div class="content">
+    {% block content %}{% endblock %}
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-content footer-large">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <img src="/media/image.png" alt="Jamin Juma Logo" class="footer-logo">
+          <h3>Jamin Juma</h3>
+          <p>Data Scientist & ML Engineer</p>
+        </div>
+      </div>
+
+      <div class="footer-grid">
+        <div class="footer-column">
+          <h4>Social Media</h4>
+          <a href="https://www.linkedin.com/in/jumajamin" target="_blank" rel="noopener noreferrer"><img src="/media/linkden_icon.png" alt="LinkedIn icon" class="footer-link-icon">LinkedIn</a>
+          <a href="https://github.com/jamin-ML/" target="_blank" rel="noopener noreferrer"><img src="/media/github_icon.png" alt="GitHub icon" class="footer-link-icon">GitHub</a>
+          <a href="https://wa.me/254742134433" target="_blank" rel="noopener noreferrer"><img src="/media/call_icon.png" alt="WhatsApp icon" class="footer-link-icon">WhatsApp</a>
+        </div>
+
+        <div class="footer-column">
+          <h4>Contact</h4>
+          <a href="mailto:jumajamin55@gmail.com"><img src="/media/email_icon.png" alt="Email icon" class="footer-link-icon">jumajamin55@gmail.com</a>
+          <a href="tel:+254742134433"><img src="/media/call_icon.png" alt="Phone icon" class="footer-link-icon">+254 742 134 433</a>
+          <a href="https://www.linkedin.com/in/jumajamin" target="_blank" rel="noopener noreferrer"><img src="/media/linkden_icon.png" alt="LinkedIn icon" class="footer-link-icon">www.linkedin.com/in/jumajamin</a>
+        </div>
+
+        <div class="footer-column">
+          <h4>Quick Links</h4>
+          <a href="{% url 'home' %}" onclick="if(window.location.pathname === '/') { event.preventDefault(); showPage('home'); }">Home</a>
+          <a href="{% url 'home' %}#about" onclick="if(window.location.pathname === '/') { event.preventDefault(); showPage('about'); }">About</a>
+          <a href="{% url 'home' %}#blog" onclick="if(window.location.pathname === '/') { event.preventDefault(); showPage('blog'); }">Blog</a>
+          <a href="{% url 'home' %}#contact" onclick="if(window.location.pathname === '/') { event.preventDefault(); showPage('contact'); }">Contact</a>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>© 2026 Jamin Juma. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="{% static 'js/binary-rain.js' %}"></script>
+  <script src="{% static 'js/script.js' %}"></script>
+  <script>
+    function showPage(id) {
+      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+    }
+    function toggleChat() {
+      const modal = document.getElementById('chatModal');
+      modal.style.display = modal.style.display === 'block' ? 'none' : 'block';
+    }
+    function sendMessage() {
+      const input = document.getElementById('chatInput');
+      const messages = document.getElementById('chatMessages');
+      if (input.value.trim()) {
+        const userMsg = document.createElement('div');
+        userMsg.style.color = '#ffffff';
+        userMsg.style.marginBottom = '10px';
+        userMsg.textContent = 'You: ' + input.value;
+        messages.appendChild(userMsg);
+        input.value = '';
+      }
+    }
+  </script>
+</body>
+</html>

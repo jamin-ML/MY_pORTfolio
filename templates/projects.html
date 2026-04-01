@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block content %}
+<section class="section-card">
+  <h2 style="margin-bottom:0.6rem;color:#f0f4fa">Projects</h2>
+  {% if user.is_staff %}
+    <div style="margin-top:0.6rem;margin-bottom:1rem;">
+      <a href="/admin/portfolio/project/add/" class="btn">Add project (admin)</a>
+    </div>
+  {% endif %}
+  <div style="margin-top:1rem;display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1rem;">
+    {% for project in projects %}
+      <div style="background:#1b2128;padding:1rem;border-radius:10px;">
+        <h4 style="color:#ecf3fe">{{ project.title }}</h4>
+        <p style="color:#b7c7d9">{{ project.description|truncatechars:160 }}</p>
+        {% if project.link %}<p><a href="{{ project.link }}" style="color:#2dd4bf">view</a></p>{% endif %}
+      </div>
+    {% empty %}
+      <p>No projects uploaded yet.</p>
+    {% endfor %}
+  </div>
+</section>
+{% endblock %}

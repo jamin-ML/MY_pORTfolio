@@ -1,0 +1,155 @@
+{% extends 'dashboard/base_dashboard.html' %}
+
+{% block content %}
+<div class="header">
+  <h1>
+    <i class="fas fa-chart-bar"></i>
+    Dashboard
+  </h1>
+</div>
+
+<div class="content">
+  <section>
+    <h2 style="color: #00ff00; margin-bottom: 2rem;">Overview</h2>
+    
+    <div class="grid">
+      <div class="card">
+        <div class="card-title">Total Blogs</div>
+        <div class="card-value">{{ blogs_count }}</div>
+        <div class="card-subtitle">Published blog posts</div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Total Projects</div>
+        <div class="card-value">{{ projects_count }}</div>
+        <div class="card-subtitle">Completed projects</div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Quick Actions</div>
+        <div style="margin-top: 1rem;">
+          <a href="{% url 'blog_create' %}" class="btn btn-primary" style="width: 100%; justify-content: center; margin-bottom: 0.5rem;">
+            <i class="fas fa-plus"></i> New Blog
+          </a>
+          <a href="{% url 'project_create' %}" class="btn btn-primary" style="width: 100%; justify-content: center;">
+            <i class="fas fa-plus"></i> New Project
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Recent Blogs -->
+  <section style="margin-top: 3rem;">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+      <h2 style="color: #00ff00;">Recent Blogs</h2>
+      <a href="{% url 'blog_dashboard' %}" class="btn btn-secondary">View All</a>
+    </div>
+
+    {% if recent_blogs %}
+    <div class="table-responsive">
+      <table>
+        <thead>
+          <tr>
+            <th>Title</th>
+            <th>Created</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for blog in recent_blogs %}
+          <tr>
+            <td>
+              <strong>{{ blog.title }}</strong>
+              <br>
+              <small style="color: #888;">{{ blog.slug }}</small>
+            </td>
+            <td>{{ blog.created|date:"M d, Y" }}</td>
+            <td>
+              <div class="action-buttons">
+                <a href="{% url 'blog_edit' blog.pk %}" class="btn btn-secondary btn-sm">
+                  <i class="fas fa-edit"></i> Edit
+                </a>
+                <form method="post" action="{% url 'blog_delete' blog.pk %}" style="display: inline;" onsubmit="return confirm('Delete this blog?');">
+                  {% csrf_token %}
+                  <button type="submit" class="btn btn-danger btn-sm">
+                    <i class="fas fa-trash"></i> Delete
+                  </button>
+                </form>
+              </div>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% else %}
+    <div style="padding: 2rem; text-align: center; background: rgba(0,255,0,0.05); border-radius: 8px;">
+      <i class="fas fa-inbox" style="font-size: 2rem; color: #00ff00; margin-bottom: 1rem;"></i>
+      <p style="color: #999;">No blogs yet. <a href="{% url 'blog_create' %}" style="color: #00ff00;">Create one now</a></p>
+    </div>
+    {% endif %}
+  </section>
+
+  <!-- Recent Projects -->
+  <section style="margin-top: 3rem;">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+      <h2 style="color: #00ff00;">Recent Projects</h2>
+      <a href="{% url 'project_dashboard' %}" class="btn btn-secondary">View All</a>
+    </div>
+
+    {% if recent_projects %}
+    <div class="table-responsive">
+      <table>
+        <thead>
+          <tr>
+            <th>Title</th>
+            <th>Created</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for project in recent_projects %}
+          <tr>
+            <td><strong>{{ project.title }}</strong></td>
+            <td>{{ project.created|date:"M d, Y" }}</td>
+            <td>
+              <div class="action-buttons">
+                <a href="{% url 'project_edit' project.pk %}" class="btn btn-secondary btn-sm">
+                  <i class="fas fa-edit"></i> Edit
+                </a>
+                <form method="post" action="{% url 'project_delete' project.pk %}" style="display: inline;" onsubmit="return confirm('Delete this project?');">
+                  {% csrf_token %}
+                  <button type="submit" class="btn btn-danger btn-sm">
+                    <i class="fas fa-trash"></i> Delete
+                  </button>
+                </form>
+              </div>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% else %}
+    <div style="padding: 2rem; text-align: center; background: rgba(0,255,0,0.05); border-radius: 8px;">
+      <i class="fas fa-inbox" style="font-size: 2rem; color: #00ff00; margin-bottom: 1rem;"></i>
+      <p style="color: #999;">No projects yet. <a href="{% url 'project_create' %}" style="color: #00ff00;">Create one now</a></p>
+    </div>
+    {% endif %}
+  </section>
+</div>
+
+<script>
+  // Auto-hide messages after 5 seconds
+  document.addEventListener('DOMContentLoaded', function() {
+    const messages = document.querySelectorAll('.message');
+    messages.forEach(msg => {
+      setTimeout(() => {
+        msg.style.animation = 'slideIn 0.3s ease-in-out reverse';
+        setTimeout(() => msg.remove(), 300);
+      }, 5000);
+    });
+  });
+</script>
+{% endblock %}
