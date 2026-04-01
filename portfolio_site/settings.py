@@ -1,5 +1,6 @@
 import os
 from pathlib import Path
+import os
 import dj_database_url
 
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -7,12 +8,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'replace-me-with-secure-key'
 
 DEBUG = False
-# Use env var in production; fallback includes both root and www hostnames.
-ALLOWED_HOSTS = [
-    host.strip()
-    for host in os.getenv('ALLOWED_HOSTS', 'jaminjuma.tech,www.jaminjuma.tech').split(',')
-    if host.strip()
-]
+ALLOWED_HOSTS = ['www.jaminjuma.tech']
 
 
 INSTALLED_APPS = [
