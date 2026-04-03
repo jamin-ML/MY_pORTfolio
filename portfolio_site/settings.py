@@ -8,7 +8,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = 'replace-me-with-secure-key'
 
-DEBUG = False
+DEBUG = True
 ALLOWED_HOSTS = ['www.jaminjuma.tech']
 
 # Optional fallback: serve media files through Django when platform routing is not configured.
