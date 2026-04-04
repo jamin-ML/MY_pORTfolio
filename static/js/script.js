@@ -170,8 +170,8 @@ async function getChatReply(messageText) {
 function toggleChat() {
   const modal = document.getElementById('chatModal');
   if (modal) {
-    const isOpen = modal.style.display === 'block';
-    modal.style.display = isOpen ? 'none' : 'block';
+    const isOpen = modal.style.display === 'flex';
+    modal.style.display = isOpen ? 'none' : 'flex';
 
     // Fire visitor email only once when chat first opens
     if (!isOpen && !visitorNotified) {
@@ -182,7 +182,7 @@ function toggleChat() {
         body: JSON.stringify({
           event_type: 'new_visitor',
           session_id: SESSION_ID,
-          page: window.location.href,
+          page: globalThis.location.href,
           timestamp: new Date().toISOString()
         })
       }).catch(() => {});

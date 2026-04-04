@@ -267,8 +267,8 @@
     let visitorNotified = false;
     function toggleChat() {
       const modal = document.getElementById('chatModal');
-      const isOpen = modal.style.display === 'block';
-      modal.style.display = isOpen ? 'none' : 'block';
+      const isOpen = modal.style.display === 'flex';
+      modal.style.display = isOpen ? 'none' : 'flex';
 
       // Fire visitor email only once when chat opens
       if (!isOpen && !visitorNotified) {
@@ -279,7 +279,7 @@
           body: JSON.stringify({
             event_type: 'new_visitor',
             session_id: SESSION_ID,
-            page: window.location.href,
+            page: globalThis.location.href,
             timestamp: new Date().toISOString()
           })
         }).catch(() => {});
@@ -333,6 +333,7 @@
         messages.appendChild(botMsg);
 
       } catch (err) {
+        console.error('Inline chat webhook error:', err);
         typing.remove();
         const errMsg = document.createElement('div');
         errMsg.style.color = '#ff4444';
