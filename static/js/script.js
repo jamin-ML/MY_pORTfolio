@@ -107,6 +107,8 @@ document.addEventListener('click', function(event) {
 // ============================
 
 const N8N_WEBHOOK_URL = 'https://juma.app.n8n.cloud/webhook/portfolio';
+const SESSION_ID = 'sess_' + Math.random().toString(36).slice(2, 10);
+let visitorNotified = false;
 
 function appendChatMessage(messages, text, options = {}) {
   const message = document.createElement('div');
@@ -132,8 +134,10 @@ async function getChatReply(messageText) {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
+        event_type: 'chat_message',
+        session_id: SESSION_ID,
         message: messageText,
-        source: 'portfolio-chat',
+        timestamp: new Date().toISOString()
       }),
     });
 
@@ -144,7 +148,7 @@ async function getChatReply(messageText) {
     const contentType = response.headers.get('content-type') || '';
     if (contentType.includes('application/json')) {
       const data = await response.json();
-      return data.reply || data.message || data.text || 'AI: I received your message, but the webhook did not return a response.';
+      return 'AI: ' + (data.reply || data.message || data.text || 'I received your message, but could not generate a response.');
     }
 
     const text = await response.text();
@@ -168,22 +172,42 @@ function toggleChat() {
   if (modal) {
     const isOpen = modal.style.display === 'block';
     modal.style.display = isOpen ? 'none' : 'block';
+
+    // Fire visitor email only once when chat first opens
+    if (!isOpen && !visitorNotified) {
+      visitorNotified = true;
+      fetch(N8N_WEBHOOK_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          event_type: 'new_visitor',
+          session_id: SESSION_ID,
+          page: window.location.href,
+          timestamp: new Date().toISOString()
+        })
+      }).catch(() => {});
+    }
   }
 }
 
 async function sendMessage() {
   const input = document.getElementById('chatInput');
   const messages = document.getElementById('chatMessages');
-  
+
   if (!input || !messages) return;
-  
+
   const messageText = input.value.trim();
   if (messageText) {
-    appendChatMessage(messages, 'You: ' + messageText, { textAlign: 'right' });
+    appendChatMessage(messages, 'You: ' + messageText, { 
+      color: '#ffffff',
+      textAlign: 'right' 
+    });
     input.value = '';
+
     const typingMsg = appendChatMessage(messages, 'AI: Thinking...', {
       textShadow: '0 0 10px rgba(0, 255, 65, 0.4)',
     });
+
     typingMsg.textContent = await getChatReply(messageText);
   }
 }
