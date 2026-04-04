@@ -106,6 +106,63 @@ document.addEventListener('click', function(event) {
 // CHAT MODAL FUNCTIONALITY
 // ============================
 
+const N8N_WEBHOOK_URL = 'https://juma.app.n8n.cloud/webhook/portfolio';
+
+function appendChatMessage(messages, text, options = {}) {
+  const message = document.createElement('div');
+  message.style.color = options.color || '#00FF41';
+  message.style.marginBottom = '10px';
+  if (options.textAlign) {
+    message.style.textAlign = options.textAlign;
+  }
+  if (options.textShadow) {
+    message.style.textShadow = options.textShadow;
+  }
+  message.textContent = text;
+  messages.appendChild(message);
+  messages.scrollTop = messages.scrollHeight;
+  return message;
+}
+
+async function getChatReply(messageText) {
+  try {
+    const response = await fetch(N8N_WEBHOOK_URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        message: messageText,
+        source: 'portfolio-chat',
+      }),
+    });
+
+    if (!response.ok) {
+      return 'AI: Sorry, the chat service is temporarily unavailable.';
+    }
+
+    const contentType = response.headers.get('content-type') || '';
+    if (contentType.includes('application/json')) {
+      const data = await response.json();
+      return data.reply || data.message || data.text || 'AI: I received your message, but the webhook did not return a response.';
+    }
+
+    const text = await response.text();
+    if (!text.trim()) {
+      return 'AI: I received your message, but the webhook did not return a response.';
+    }
+
+    if (text.startsWith('AI:')) {
+      return text;
+    }
+
+    return 'AI: ' + text;
+  } catch (error) {
+    console.error('Chat webhook error:', error);
+    return 'AI: Sorry, I could not reach the chat service right now.';
+  }
+}
+
 function toggleChat() {
   const modal = document.getElementById('chatModal');
   if (modal) {
@@ -114,7 +171,7 @@ function toggleChat() {
   }
 }
 
-function sendMessage() {
+async function sendMessage() {
   const input = document.getElementById('chatInput');
   const messages = document.getElementById('chatMessages');
   
@@ -122,30 +179,12 @@ function sendMessage() {
   
   const messageText = input.value.trim();
   if (messageText) {
-    // User message
-    const userMsg = document.createElement('div');
-    userMsg.style.color = '#00FF41';
-    userMsg.style.marginBottom = '10px';
-    userMsg.style.textAlign = 'right';
-    userMsg.textContent = 'You: ' + messageText;
-    messages.appendChild(userMsg);
-    
-    // Clear input
+    appendChatMessage(messages, 'You: ' + messageText, { textAlign: 'right' });
     input.value = '';
-    
-    // Scroll to bottom
-    messages.scrollTop = messages.scrollHeight;
-    
-    // Simulate AI response
-    setTimeout(() => {
-      const aiMsg = document.createElement('div');
-      aiMsg.style.color = '#00FF41';
-      aiMsg.style.marginBottom = '10px';
-      aiMsg.style.textShadow = '0 0 10px rgba(0, 255, 65, 0.4)';
-      aiMsg.textContent = 'AI: Thanks for your message! I\'m processing...';
-      messages.appendChild(aiMsg);
-      messages.scrollTop = messages.scrollHeight;
-    }, 500);
+    const typingMsg = appendChatMessage(messages, 'AI: Thinking...', {
+      textShadow: '0 0 10px rgba(0, 255, 65, 0.4)',
+    });
+    typingMsg.textContent = await getChatReply(messageText);
   }
 }
 
