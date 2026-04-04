@@ -360,7 +360,7 @@ footer {
 
 .chat-modal {
   position: fixed;
-  bottom: 100px;
+  top: 120px;
   right: 30px;
   width: 350px;
   height: 500px;

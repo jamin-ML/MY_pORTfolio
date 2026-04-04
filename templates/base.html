@@ -196,7 +196,7 @@
       <button type="button" class="chat-close" onclick="toggleChat()" aria-label="Close chat">×</button>
     </div>
     <div class="chat-messages" id="chatMessages">
-      <div style="color: #00FF41; margin-bottom: 10px; text-shadow: 0 0 10px rgba(0, 255, 65, 0.4);">AI: Hello! How can I help you today?</div>
+      <div style="color: #00FF41; margin-bottom: 10px; text-shadow: 0 0 10px rgba(0, 255, 65, 0.4);">AI: Hi! I'm your portfolio tour assistant. What can I help you with? I'm here for you!</div>
     </div>
     <div class="chat-input">
       <input type="text" id="chatInput" placeholder="Type your message...">
@@ -351,6 +351,12 @@
         .addEventListener('keydown', e => {
           if (e.key === 'Enter') sendMessage();
         });
+
+      // Auto-open chat modal on page load
+      const modal = document.getElementById('chatModal');
+      if (modal) {
+        modal.style.display = 'flex';
+      }
     });
 </script>
 </body>
