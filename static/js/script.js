@@ -109,6 +109,65 @@ document.addEventListener('click', function(event) {
 const N8N_WEBHOOK_URL = 'https://juma.app.n8n.cloud/webhook/portfolio';
 const SESSION_ID = 'sess_' + Math.random().toString(36).slice(2, 10);
 let visitorNotified = false;
+let chatLabelDismissed = false;
+
+function getChatElements() {
+  return {
+    modal: document.getElementById('chatModal'),
+    chatLabel: document.getElementById('chatLabel'),
+    chatLauncher: document.querySelector('.chat-button-container')
+  };
+}
+
+function setChatLauncherState(isOpen) {
+  const { modal, chatLabel, chatLauncher } = getChatElements();
+  if (!modal) {
+    return;
+  }
+
+  modal.style.display = isOpen ? 'flex' : 'none';
+
+  if (chatLauncher) {
+    chatLauncher.style.display = isOpen ? 'none' : 'flex';
+  }
+
+  if (chatLabel) {
+    if (isOpen) {
+      chatLabel.classList.add('hidden');
+    } else if (!chatLabelDismissed) {
+      chatLabel.classList.remove('hidden');
+    }
+  }
+}
+
+function notifyVisitorOnce() {
+  if (visitorNotified) {
+    return;
+  }
+
+  visitorNotified = true;
+  fetch(N8N_WEBHOOK_URL, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      event_type: 'new_visitor',
+      session_id: SESSION_ID,
+      page: globalThis.location.href,
+      timestamp: new Date().toISOString()
+    })
+  }).catch(() => {});
+}
+
+function dismissChatLabel(event) {
+  if (event) {
+    event.stopPropagation();
+  }
+  const chatLabel = document.getElementById('chatLabel');
+  if (chatLabel) {
+    chatLabel.classList.add('hidden');
+  }
+  chatLabelDismissed = true;
+}
 
 function appendChatMessage(messages, text, options = {}) {
   const message = document.createElement('div');
@@ -168,25 +227,18 @@ async function getChatReply(messageText) {
 }
 
 function toggleChat() {
-  const modal = document.getElementById('chatModal');
-  if (modal) {
-    const isOpen = modal.style.display === 'flex';
-    modal.style.display = isOpen ? 'none' : 'flex';
+  const { modal } = getChatElements();
+  if (!modal) {
+    return;
+  }
 
-    // Fire visitor email only once when chat first opens
-    if (!isOpen && !visitorNotified) {
-      visitorNotified = true;
-      fetch(N8N_WEBHOOK_URL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          event_type: 'new_visitor',
-          session_id: SESSION_ID,
-          page: globalThis.location.href,
-          timestamp: new Date().toISOString()
-        })
-      }).catch(() => {});
-    }
+  const isOpen = globalThis.getComputedStyle(modal).display === 'flex';
+  const nextOpenState = !isOpen;
+  setChatLauncherState(nextOpenState);
+
+  if (nextOpenState) {
+    chatLabelDismissed = true;
+    notifyVisitorOnce();
   }
 }
 
@@ -215,6 +267,8 @@ async function sendMessage() {
 // Allow sending message with Enter key
 document.addEventListener('DOMContentLoaded', function() {
   const chatInput = document.getElementById('chatInput');
+  setChatLauncherState(false);
+
   if (chatInput) {
     chatInput.addEventListener('keypress', function(event) {
       if (event.key === 'Enter') {

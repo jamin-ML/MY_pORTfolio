@@ -186,7 +186,13 @@
   <!-- Floating Buttons -->
   <div class="floating-buttons">
     <a href="https://wa.me/254742134433" class="floating-button left" target="_blank">💬</a>
-    <button class="floating-button right" onclick="toggleChat()">🤖</button>
+    <div class="chat-button-container">
+      <div class="chat-label" id="chatLabel">
+        <span class="chat-label-text">Hi, how can I help you?</span>
+        <button type="button" class="chat-label-close" onclick="dismissChatLabel(event)" aria-label="Dismiss chat hint">×</button>
+      </div>
+      <button class="floating-button right" onclick="toggleChat()">🤖</button>
+    </div>
   </div>
 
   <!-- AI Chat Modal -->
@@ -252,112 +258,5 @@
 
   <script src="{% static 'js/binary-rain.js' %}"></script>
   <script src="{% static 'js/script.js' %}"></script>
-  <script>
-    // ── Config ──────────────────────────────────────────
-    const N8N_WEBHOOK_URL = 'https://juma.app.n8n.cloud/webhook/portfolio';
-    const SESSION_ID = 'sess_' + Math.random().toString(36).slice(2, 10);
-
-    // ── Page navigation ──────────────────────────────────
-    function showPage(id) {
-      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-      document.getElementById(id).classList.add('active');
-    }
-
-    // ── Chat toggle + visitor trigger ────────────────────
-    let visitorNotified = false;
-    function toggleChat() {
-      const modal = document.getElementById('chatModal');
-      const isOpen = modal.style.display === 'flex';
-      modal.style.display = isOpen ? 'none' : 'flex';
-
-      // Fire visitor email only once when chat opens
-      if (!isOpen && !visitorNotified) {
-        visitorNotified = true;
-        fetch(N8N_WEBHOOK_URL, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            event_type: 'new_visitor',
-            session_id: SESSION_ID,
-            page: globalThis.location.href,
-            timestamp: new Date().toISOString()
-          })
-        }).catch(() => {});
-      }
-    }
-
-    // ── Send message ─────────────────────────────────────
-    async function sendMessage() {
-      const input = document.getElementById('chatInput');
-      const messages = document.getElementById('chatMessages');
-      const text = input.value.trim();
-      if (!text) return;
-
-      // Show user message
-      const userMsg = document.createElement('div');
-      userMsg.style.color = '#ffffff';
-      userMsg.style.marginBottom = '10px';
-      userMsg.textContent = 'You: ' + text;
-      messages.appendChild(userMsg);
-      input.value = '';
-
-      // Show typing indicator
-      const typing = document.createElement('div');
-      typing.style.color = '#00FF41';
-      typing.style.marginBottom = '10px';
-      typing.style.opacity = '0.6';
-      typing.textContent = 'AI: typing...';
-      messages.appendChild(typing);
-      messages.scrollTop = messages.scrollHeight;
-
-      try {
-        const res = await fetch(N8N_WEBHOOK_URL, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            event_type: 'chat_message',
-            session_id: SESSION_ID,
-            message: text,
-            timestamp: new Date().toISOString()
-          })
-        });
-
-        const data = await res.json();
-        typing.remove();
-
-        const botMsg = document.createElement('div');
-        botMsg.style.color = '#00FF41';
-        botMsg.style.marginBottom = '10px';
-        botMsg.style.textShadow = '0 0 10px rgba(0, 255, 65, 0.4)';
-        botMsg.textContent = 'AI: ' + (data.reply || 'Sorry, I could not respond.');
-        messages.appendChild(botMsg);
-
-      } catch (err) {
-        console.error('Inline chat webhook error:', err);
-        typing.remove();
-        const errMsg = document.createElement('div');
-        errMsg.style.color = '#ff4444';
-        errMsg.style.marginBottom = '10px';
-        errMsg.textContent = 'AI: Connection error. Please try again.';
-        messages.appendChild(errMsg);
-      }
-
-      messages.scrollTop = messages.scrollHeight;
-    }
-
-    // ── Send on Enter key ────────────────────────────────
-    document.addEventListener('DOMContentLoaded', () => {
-      document.getElementById('chatInput')
-        .addEventListener('keydown', e => {
-          if (e.key === 'Enter') sendMessage();
-        });
-
-      // Auto-open chat modal on page load
-      const modal = document.getElementById('chatModal');
-      if (modal) {
-        modal.style.display = 'flex';
-      }
-    });
-</script>
 </body>
 </html>

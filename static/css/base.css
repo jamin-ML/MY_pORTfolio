@@ -251,6 +251,81 @@ nav {
   box-shadow: 0 0 25px rgba(0, 255, 65, 0.6);
 }
 
+/* Chat Button Container with Label */
+.chat-button-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  pointer-events: auto;
+}
+
+.chat-label {
+  background: var(--accent-matrix-green);
+  color: var(--bg-deep-charcoal);
+  padding: 0.6rem 1rem;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: 600;
+  white-space: nowrap;
+  box-shadow: 0 0 15px var(--glow-color);
+  animation: slideIn 0.4s ease-in-out;
+  position: relative;
+  max-width: 200px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  pointer-events: auto;
+}
+
+.chat-label-text {
+  line-height: 1.2;
+}
+
+.chat-label-close {
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font-size: 16px;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0;
+  opacity: 0.75;
+  pointer-events: auto;
+}
+
+.chat-label-close:hover {
+  opacity: 1;
+}
+
+.chat-label::after {
+  content: '';
+  position: absolute;
+  right: -8px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 0;
+  height: 0;
+  border-left: 8px solid var(--accent-matrix-green);
+  border-top: 6px solid transparent;
+  border-bottom: 6px solid transparent;
+}
+
+.chat-label.hidden {
+  display: none;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
 /* ============================
    FOOTER
    ============================ */

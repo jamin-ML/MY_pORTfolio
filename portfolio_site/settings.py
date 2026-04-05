@@ -1,6 +1,5 @@
 import os
 from pathlib import Path
-import dj_database_url
 from dotenv import load_dotenv
 load_dotenv()
 
@@ -9,7 +8,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'replace-me-with-secure-key'
 
 DEBUG = True
-ALLOWED_HOSTS = ['www.jaminjuma.tech']
+ALLOWED_HOSTS = ['www.jaminjuma.tech', '127.0.0.1', 'localhost']
 
 # Optional fallback: serve media files through Django when platform routing is not configured.
 # Set SERVE_MEDIA_FILES=True in production only if your reverse proxy cannot map /media/.
@@ -63,11 +62,10 @@ TEMPLATES = [
 WSGI_APPLICATION = 'portfolio_site.wsgi.application'
 
 DATABASES = {
-    'default': dj_database_url.config(
-        default=os.environ.get('DATABASE_URL'),
-        conn_max_age=600,
-        conn_health_checks=True,
-    )
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
 }
 AUTH_PASSWORD_VALIDATORS = []
 

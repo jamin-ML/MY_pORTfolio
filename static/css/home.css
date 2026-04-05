@@ -33,6 +33,36 @@
   background: #B9FFB9;
 }
 
+#aboutModal,
+#projectModal {
+  z-index: 3000 !important;
+  display: none;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 110px 16px 24px;
+  box-sizing: border-box;
+}
+
+#aboutModal > div,
+#projectModal > div {
+  margin: 0 !important;
+  width: min(800px, 100%);
+  max-height: calc(100vh - 140px);
+  overflow-y: auto;
+}
+
+@media (max-width: 768px) {
+  #aboutModal,
+  #projectModal {
+    padding-top: 90px;
+  }
+
+  #aboutModal > div,
+  #projectModal > div {
+    max-height: calc(100vh - 110px);
+  }
+}
+
 /* ============================
    HERO SECTION
    ============================ */
