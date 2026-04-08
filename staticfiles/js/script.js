@@ -106,52 +106,169 @@ document.addEventListener('click', function(event) {
 // CHAT MODAL FUNCTIONALITY
 // ============================
 
-function toggleChat() {
-  const modal = document.getElementById('chatModal');
-  if (modal) {
-    const isOpen = modal.style.display === 'block';
-    modal.style.display = isOpen ? 'none' : 'block';
+const N8N_WEBHOOK_URL = 'https://juma.app.n8n.cloud/webhook/portfolio';
+const SESSION_ID = 'sess_' + Math.random().toString(36).slice(2, 10);
+let visitorNotified = false;
+let chatLabelDismissed = false;
+
+function getChatElements() {
+  return {
+    modal: document.getElementById('chatModal'),
+    chatLabel: document.getElementById('chatLabel'),
+    chatLauncher: document.querySelector('.chat-button-container')
+  };
+}
+
+function setChatLauncherState(isOpen) {
+  const { modal, chatLabel, chatLauncher } = getChatElements();
+  if (!modal) {
+    return;
+  }
+
+  modal.style.display = isOpen ? 'flex' : 'none';
+
+  if (chatLauncher) {
+    chatLauncher.style.display = isOpen ? 'none' : 'flex';
+  }
+
+  if (chatLabel) {
+    if (isOpen) {
+      chatLabel.classList.add('hidden');
+    } else if (!chatLabelDismissed) {
+      chatLabel.classList.remove('hidden');
+    }
   }
 }
 
-function sendMessage() {
+function notifyVisitorOnce() {
+  if (visitorNotified) {
+    return;
+  }
+
+  visitorNotified = true;
+  fetch(N8N_WEBHOOK_URL, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      event_type: 'new_visitor',
+      session_id: SESSION_ID,
+      page: globalThis.location.href,
+      timestamp: new Date().toISOString()
+    })
+  }).catch(() => {});
+}
+
+function dismissChatLabel(event) {
+  if (event) {
+    event.stopPropagation();
+  }
+  const chatLabel = document.getElementById('chatLabel');
+  if (chatLabel) {
+    chatLabel.classList.add('hidden');
+  }
+  chatLabelDismissed = true;
+}
+
+function appendChatMessage(messages, text, options = {}) {
+  const message = document.createElement('div');
+  message.style.color = options.color || '#00FF41';
+  message.style.marginBottom = '10px';
+  if (options.textAlign) {
+    message.style.textAlign = options.textAlign;
+  }
+  if (options.textShadow) {
+    message.style.textShadow = options.textShadow;
+  }
+  message.textContent = text;
+  messages.appendChild(message);
+  messages.scrollTop = messages.scrollHeight;
+  return message;
+}
+
+async function getChatReply(messageText) {
+  try {
+    const response = await fetch(N8N_WEBHOOK_URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        event_type: 'chat_message',
+        session_id: SESSION_ID,
+        message: messageText,
+        timestamp: new Date().toISOString()
+      }),
+    });
+
+    if (!response.ok) {
+      return 'AI: Sorry, the chat service is temporarily unavailable.';
+    }
+
+    const contentType = response.headers.get('content-type') || '';
+    if (contentType.includes('application/json')) {
+      const data = await response.json();
+      return 'AI: ' + (data.reply || data.message || data.text || 'I received your message, but could not generate a response.');
+    }
+
+    const text = await response.text();
+    if (!text.trim()) {
+      return 'AI: I received your message, but the webhook did not return a response.';
+    }
+
+    if (text.startsWith('AI:')) {
+      return text;
+    }
+
+    return 'AI: ' + text;
+  } catch (error) {
+    console.error('Chat webhook error:', error);
+    return 'AI: Sorry, I could not reach the chat service right now.';
+  }
+}
+
+function toggleChat() {
+  const { modal } = getChatElements();
+  if (!modal) {
+    return;
+  }
+
+  const isOpen = globalThis.getComputedStyle(modal).display === 'flex';
+  const nextOpenState = !isOpen;
+  setChatLauncherState(nextOpenState);
+
+  if (nextOpenState) {
+    chatLabelDismissed = true;
+    notifyVisitorOnce();
+  }
+}
+
+async function sendMessage() {
   const input = document.getElementById('chatInput');
   const messages = document.getElementById('chatMessages');
-  
+
   if (!input || !messages) return;
-  
+
   const messageText = input.value.trim();
   if (messageText) {
-    // User message
-    const userMsg = document.createElement('div');
-    userMsg.style.color = '#00FF41';
-    userMsg.style.marginBottom = '10px';
-    userMsg.style.textAlign = 'right';
-    userMsg.textContent = 'You: ' + messageText;
-    messages.appendChild(userMsg);
-    
-    // Clear input
+    appendChatMessage(messages, 'You: ' + messageText, { 
+      color: '#ffffff',
+      textAlign: 'right' 
+    });
     input.value = '';
-    
-    // Scroll to bottom
-    messages.scrollTop = messages.scrollHeight;
-    
-    // Simulate AI response
-    setTimeout(() => {
-      const aiMsg = document.createElement('div');
-      aiMsg.style.color = '#00FF41';
-      aiMsg.style.marginBottom = '10px';
-      aiMsg.style.textShadow = '0 0 10px rgba(0, 255, 65, 0.4)';
-      aiMsg.textContent = 'AI: Thanks for your message! I\'m processing...';
-      messages.appendChild(aiMsg);
-      messages.scrollTop = messages.scrollHeight;
-    }, 500);
+
+    const typingMsg = appendChatMessage(messages, 'AI: Thinking...', {
+      textShadow: '0 0 10px rgba(0, 255, 65, 0.4)',
+    });
+
+    typingMsg.textContent = await getChatReply(messageText);
   }
 }
 
 // Allow sending message with Enter key
 document.addEventListener('DOMContentLoaded', function() {
   const chatInput = document.getElementById('chatInput');
+  setChatLauncherState(false);
+
   if (chatInput) {
     chatInput.addEventListener('keypress', function(event) {
       if (event.key === 'Enter') {
