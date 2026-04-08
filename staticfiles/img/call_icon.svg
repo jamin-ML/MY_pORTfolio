@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" role="img" aria-labelledby="title">
+  <title>Phone icon</title>
+  <circle cx="24" cy="24" r="22" fill="#00FF41" />
+  <path d="M17 12h7v3c0 1-1 2-2 2h-1c0 3 3 6 6 6v-1c0-1 1-2 2-2h3v7c0 2-2 3-4 3-10 0-18-8-18-18 0-2 1-4 3-4h4z" fill="#0D1117" />
+</svg>
